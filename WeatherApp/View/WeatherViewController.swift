@@ -11,7 +11,8 @@ import UIKit
 class WeatherViewController: UIViewController {
     
     var viewModel: WeatherViewModel = WeatherViewModel()
-    
+    private let loader = UIActivityIndicatorView(style: .large)
+
     let headerLabel: UILabel = {
         let label = PaddedLabel()
         label.numberOfLines = 0
@@ -65,6 +66,10 @@ class WeatherViewController: UIViewController {
         searchButton.addTarget(self, action: #selector(searchWeather), for: .touchUpInside)
         view.addSubview(searchButton)
         
+        loader.translatesAutoresizingMaskIntoConstraints = false
+        loader.hidesWhenStopped = true
+        view.addSubview(loader)
+        
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
         cityTextField.translatesAutoresizingMaskIntoConstraints = false
         searchButton.translatesAutoresizingMaskIntoConstraints = false
@@ -92,11 +97,15 @@ class WeatherViewController: UIViewController {
            
             forecastLabel.topAnchor.constraint(equalTo: weatherLabel.bottomAnchor, constant: 10),
             forecastLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            forecastLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            forecastLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+
+            loader.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loader.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
     @objc func searchWeather() {
+        loader.startAnimating() // Start the loader
         guard let city = cityTextField.text, !city.isEmpty else {
             print("Please enter a city name")
             return
@@ -105,7 +114,7 @@ class WeatherViewController: UIViewController {
         viewModel.fetchWeather(for: city) { [weak self] result in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                
+                self.loader.stopAnimating() // Stop the loader
                 switch result {
                 case .success:
                     self.updateUI()
