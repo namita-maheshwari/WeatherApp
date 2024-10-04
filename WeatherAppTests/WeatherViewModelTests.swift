@@ -94,5 +94,50 @@ class WeatherViewModelTests: XCTestCase {
         // Assert
         XCTAssertNil(attributedString)
     }
+
+    func testGetForecastInfo_withValidData() {
+        // Given: A valid ForecastResponse
+        let forecastResponse = ForecastResponse(
+            location: Location(name: "City", region: "Region", country: "Country", lat: 0.0, lon: 0.0, tzID: "GMT", localtimeEpoch: 0, localtime: "2024-10-01 12:00"),
+            current: CurrentWeather(lastUpdated: "2024-10-01 12:00", tempC: 25.0, isDay: 1, condition: Condition(text: "Sunny", icon: "", code: 1000), windMph: 10.0, humidity: 60),
+            forecast: Forecast(forecastday: [
+                ForecastDay(date: "2024-10-02", day: DayWeather(maxtempC: 30.0, mintempC: 20.0, condition: Condition(text: "Partly Cloudy", icon: "", code: 1003))),
+                ForecastDay(date: "2024-10-03", day: DayWeather(maxtempC: 28.0, mintempC: 18.0, condition: Condition(text: "Cloudy", icon: "", code: 1006))),
+                ForecastDay(date: "2024-10-04", day: DayWeather(maxtempC: 29.0, mintempC: 19.0, condition: Condition(text: "Rain", icon: "", code: 1009))),
+                ForecastDay(date: "2024-10-05", day: DayWeather(maxtempC: 27.0, mintempC: 17.0, condition: Condition(text: "Thunderstorms", icon: "", code: 1087))),
+                ForecastDay(date: "2024-10-06", day: DayWeather(maxtempC: 26.0, mintempC: 16.0, condition: Condition(text: "Sunny", icon: "", code: 1000)))
+            ])
+        )
+        
+        // Set the weather data in the view model
+        weatherViewModel.weatherData = forecastResponse
+        
+        // When: Calling getForecastInfo
+        let forecastInfo = weatherViewModel.getForecastInfo()
+        
+        // Then: The forecast information should not be nil and should contain the expected strings
+        XCTAssertNotNil(forecastInfo)
+        
+        let forecastString = forecastInfo?.string
+        
+        XCTAssertTrue(forecastString?.contains("5-DAY FORECAST") ?? false)
+        XCTAssertTrue(forecastString?.contains("2024-10-02") ?? false)
+        XCTAssertTrue(forecastString?.contains("Max Temp: 30.0°C, Min Temp: 20.0°C") ?? false)
+        XCTAssertTrue(forecastString?.contains("Condition: Partly Cloudy") ?? false)
+        XCTAssertTrue(forecastString?.contains("2024-10-03") ?? false)
+        XCTAssertTrue(forecastString?.contains("Max Temp: 28.0°C, Min Temp: 18.0°C") ?? false)
+        XCTAssertTrue(forecastString?.contains("Condition: Cloudy") ?? false)
+    }
+    
+    func testGetForecastInfo_withNilData() {
+        // Given: No weather data
+        weatherViewModel.weatherData = nil
+        
+        // When: Calling getForecastInfo
+        let forecastInfo = weatherViewModel.getForecastInfo()
+        
+        // Then: The forecast information should be nil
+        XCTAssertNil(forecastInfo)
+    }
 }
 
