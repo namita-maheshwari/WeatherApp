@@ -10,9 +10,8 @@ The app is built using Swift and follows the **MVVM architecture** to separate t
 - **5-Day Forecast**: Provides a 5-day forecast, showing the max/min temperature and weather conditions for each day.
 - **Error Handling**: Displays error messages for invalid city input or API request failure.
 - **Loading State**: Shows a loading indicator while fetching weather data from the API.
+- **Screenshots
 
-## Screenshots
-*Include screenshots of the current weather view, 5-day forecast, and error states.*
 
 ## App Architecture
 
