@@ -10,8 +10,12 @@ The app is built using Swift and follows the **MVVM architecture** to separate t
 - **5-Day Forecast**: Provides a 5-day forecast, showing the max/min temperature and weather conditions for each day.
 - **Error Handling**: Displays error messages for invalid city input or API request failure.
 - **Loading State**: Shows a loading indicator while fetching weather data from the API.
-- **Screenshots
 
+### Screenshots
+![AppHomePage](https://github.com/user-attachments/assets/9fb2bdec-8f63-4d5a-919b-cec1b04c60d7)
+
+![Place1-Forecast](https://github.com/user-attachments/assets/997c5f33-ec4a-4b4c-bef3-78508c0cb5a9)
+![Place2-Forecast](https://github.com/user-attachments/assets/6264aaf2-775e-4239-9492-46213e378b92)
 
 ## App Architecture
 
@@ -115,6 +119,18 @@ Unit tests are written using **XCTest** to validate the functionality of `Weathe
 1. Open Xcode and select the `WeatherApp` scheme.
 2. Press `Cmd + U` to run the tests or go to **Product > Test**.
 
+### Code Coverage
+Code coverage is used to measure the percentage of code tested by the unit tests. To generate code coverage reports:
+
+1. Enable "Code Coverage" in the Build Settings of your test target in Xcode.
+2. Run the tests (`Command + U`).
+3. View the coverage report in the report navigator under the "Coverage" tab.
+
+- **Attachements**:
+<img width="1415" alt="CodeCoverage" src="https://github.com/user-attachments/assets/e710b51b-75a4-49bc-ae06-cea8569d874e">
+<img width="1078" alt="CoverageReport" src="https://github.com/user-attachments/assets/a08843fc-ee64-4cb8-94a8-04553573816e">
+
+  
 ## Conclusion
 
 This Weather App is a fully functional iOS app providing current weather data and a 5-day forecast using real-time API integration. The app follows the MVVM architecture for clean, modular, and testable code.
